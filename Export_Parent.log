@@ -1,0 +1,5 @@
+2020-10-22 19:35:19,031 DEBUG [org.springframework.web.servlet.view.JstlView] - Forwarding to [/WEB-INF/pages/company/company-list.jsp]
+2020-10-22 19:35:19,136 DEBUG [org.springframework.web.servlet.DispatcherServlet] - Completed 200 OK
+2020-10-22 19:35:29,703 DEBUG [org.springframework.web.context.support.XmlWebApplicationContext] - Closing WebApplicationContext for namespace 'dispatcherServlet-servlet', started on Thu Oct 22 19:34:49 CST 2020, parent: Root WebApplicationContext
+2020-10-22 19:35:29,709 DEBUG [org.springframework.web.context.support.XmlWebApplicationContext] - Closing Root WebApplicationContext, started on Thu Oct 22 19:34:47 CST 2020
+2020-10-22 19:35:29,715 INFO [com.alibaba.druid.pool.DruidDataSource] - {dataSource-1} closed
