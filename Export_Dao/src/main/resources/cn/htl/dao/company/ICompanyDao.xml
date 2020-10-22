@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--namespace: 需要映射的Dao接口类型-->
+<mapper namespace="cn.htl.dao.company.ICompanyDao">
+
+<!--数据库表 表字段 与类的成员变量 不一致-->
+<!--    <select id="findAll" resultType="company">-->
+<!--select-->
+<!--	id,-->
+<!--	name ,-->
+<!--	expiration_date as expirationDate ,-->
+<!--	address,-->
+<!--	license_id as licenseId  ,-->
+<!--	representative ,-->
+<!--	phone  ,-->
+<!--	company_size as companySize  ,-->
+<!--	industry  ,-->
+<!--	remarks ,-->
+<!--	state,-->
+<!--	balance ,-->
+<!--	city-->
+<!--from ss_company-->
+<!--    </select>-->
+        <resultMap id="companyMap" type="company">
+            <id column="id" property="id"/>
+            <result  column="expiration_date" property="expirationDate"/>
+            <result  column="license_id" property="licenseId"/>
+            <result  column="company_size" property="companySize"/>
+        </resultMap>
+        <select id="findAll" resultMap="companyMap">
+        select
+            *
+        from ss_company
+    </select>
+</mapper>

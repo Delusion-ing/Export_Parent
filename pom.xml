@@ -17,6 +17,9 @@
 
     <!-- 定义依赖的版本号 -->
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
         <junit.version>4.12</junit.version>
         <spring.version>5.2.9.RELEASE</spring.version>
         <pagehelper.version>5.1.8</pagehelper.version>
@@ -34,6 +37,12 @@
     </properties>
     <!-- 定义依赖 -->
     <dependencies>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+            <version>${mybatis.spring.version}</version>
+        </dependency>
+
         <!-- Spring -->
         <dependency>
             <groupId>org.springframework</groupId>
