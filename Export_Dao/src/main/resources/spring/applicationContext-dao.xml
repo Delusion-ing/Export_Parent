@@ -21,13 +21,31 @@
         <!--注入数据源-->
         <property name="dataSource" ref="dataSource"/>
         <!-- com.wzx.domain.company.Company  company-->
-        <property name="typeAliasesPackage" value="cn.htl.domain.company"/>
+        <property name="typeAliasesPackage" value="cn.htl.domain"/>
+
+        <!-- PageHelper配置 -->
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageInterceptor">
+                    <property name="properties">
+                        <!--使用下面的方式配置参数，一行配置一个 -->
+                        <!-- pageNum<=0 时会查询第一页 -->
+                        <!-- 指定数据库方言 -->
+                        <value>
+                            reasonable=true
+                            helperDialect=mysql
+                        </value>
+                    </property>
+                </bean>
+            </array>
+
+        </property>
     </bean>
 
     <!--2.2 配置Dao接口所在包 动态代理 session.getMapper(Dao.class)-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <!--指定Dao接口所在包-->
-        <property name="basePackage" value="cn.htl.dao.company"/>
+        <property name="basePackage" value="cn.htl.dao"/>
     </bean>
 
 </beans>

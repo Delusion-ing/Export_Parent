@@ -32,4 +32,87 @@
             *
         from ss_company
     </select>
+    <insert id="save" parameterType="company">
+            insert into ss_company
+            (
+            id              ,
+            name            ,
+            expiration_date ,
+            address         ,
+            license_id      ,
+            representative  ,
+            phone           ,
+            company_size    ,
+            industry        ,
+            remarks         ,
+            state           ,
+            balance         ,
+            city
+
+            )
+            values
+            (
+
+            #{id              },
+            #{name            },
+            #{expirationDate },
+            #{address         },
+            #{licenseId      },
+            #{representative  },
+            #{phone           },
+            #{companySize    },
+            #{industry        },
+            #{remarks         },
+            #{state           },
+            #{balance         },
+            #{city}
+
+
+            )
+
+    </insert>
+
+
+    <delete id="deleteById" parameterType="string">
+        delete from ss_company where id = #{id}
+    </delete>
+
+
+    <select id="findById" parameterType="string" resultType="company">
+select
+	id,
+	name ,
+	expiration_date as expirationDate ,
+	address,
+	license_id as licenseId  ,
+	representative ,
+	phone  ,
+	company_size as companySize  ,
+	industry  ,
+	remarks ,
+	state,
+	balance ,
+	city
+from ss_company
+where  id = #{id}
+    </select>
+
+
+
+    <update id="update" parameterType="company">
+     update ss_company
+        set name           = #{name           },
+            expiration_date= #{expirationDate},
+            address        = #{address        },
+            license_id     = #{licenseId     },
+            representative = #{representative },
+            phone          = #{phone          },
+            company_size   = #{companySize   },
+            industry       = #{industry       },
+            remarks        = #{remarks        },
+            state          = #{state          },
+            balance        = #{balance        },
+            city           = #{city           }
+    where id = #{id}
+    </update>
 </mapper>

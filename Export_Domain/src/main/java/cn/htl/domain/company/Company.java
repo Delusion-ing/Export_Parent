@@ -1,9 +1,26 @@
 package cn.htl.domain.company;
 
 import java.util.Date;
+
 //企业实体类
 public class Company {
     public Company() {
+    }
+
+    public Company(String id, String name, Date expirationDate, String address, String licenseId, String representative, String phone, String companySize, String industry, String remarks, Integer state, Double balance, String city) {
+        this.id = id;
+        this.name = name;
+        this.expirationDate = expirationDate;
+        this.address = address;
+        this.licenseId = licenseId;
+        this.representative = representative;
+        this.phone = phone;
+        this.companySize = companySize;
+        this.industry = industry;
+        this.remarks = remarks;
+        this.state = state;
+        this.balance = balance;
+        this.city = city;
     }
 
     @Override
@@ -185,7 +202,6 @@ public class Company {
      * 城市
      */
     private String city;
-
 
 
 }

@@ -16,9 +16,20 @@
         <!--2.2 后缀-->
         <property name="suffix" value=".jsp"/>
     </bean>
-
     <!--3.mvc注解驱动-->
     <!--3. 把转换器工厂放入到注解驱动，才会生效的 @RequestMapping @ResponseBody @RequestBody-->
-    <mvc:annotation-driven />
+    <mvc:annotation-driven  conversion-service="conversionServiceFactory"/>
+    <bean id="stringToDateConverter" class="cn.htl.web.converter.StringToDateConverter"/>
 
+    <!--2.把转换器对象放入SpringMVC转换器工厂中-->
+    <bean id="conversionServiceFactory" class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <ref bean="stringToDateConverter"/>
+            </set>
+        </property>
+    </bean>
+
+    <!--2 注册 -->
+    <bean id="myExceptionResolver" class="cn.htl.web.exceptions.MyExceptionResolver"/>
 </beans>
