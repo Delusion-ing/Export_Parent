@@ -5,21 +5,16 @@ import cn.htl.domain.system.dept.Dept;
 import cn.htl.service.system.dept.IDeptService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
-/**
- * @ClassName IDeptServiceImpl
- * @Description TODO
- * @Author 虎太郎
- * @Date 2020/10/29 20:59
- * @Version 1.0
- */
-@Service
-public class IDeptServiceImpl implements IDeptService {
+@Service//将给spring管理
+public class DeptServiceImpl implements IDeptService {
+
     //还需要注入dao 根据三层架构  service调用dao
     @Autowired
     IDeptDao iDeptDao;
@@ -31,16 +26,6 @@ public class IDeptServiceImpl implements IDeptService {
         //select * from dept limit 0,20;
         PageHelper.startPage(curr,pageSize);
         List<Dept> list =  iDeptDao.findAll(companyId);
-        return new PageInfo<>(list);
-    }
-
-    public PageInfo<Dept> findBy(int curr, int pageSize, String companyId) {
-        //调用dao查询所有的记录
-        //select * from dept;
-        //select count(*) from dept;
-        //select * from dept limit 0,20;
-        PageHelper.startPage(curr, pageSize);
-        List<Dept> list = iDeptDao.findAllDept();
         return new PageInfo<>(list);
     }
 
@@ -63,5 +48,24 @@ public class IDeptServiceImpl implements IDeptService {
     @Override
     public Dept findById(String deptId) {
         return iDeptDao.findById(deptId);
+    }
+
+    @Override
+    public void updateDept(Dept dept) {
+        //与保存的区别 》1：前者insert 后者是update  》2：前者需要产生id，后者有id
+        iDeptDao.update(dept);
+    }
+
+    @Override
+    public boolean deleteDeptById(String deptId) {
+        //先查询count
+        int count = iDeptDao.findParentCount(deptId);
+        //再根据count判断
+        if(count==0){//没有给其他部门作上级
+            iDeptDao.deleteById(deptId);
+            return true;
+        }else{
+            return false;
+        }
     }
 }

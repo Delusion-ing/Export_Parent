@@ -41,9 +41,10 @@
 </form>
 <script>
     function goPage(page) {
-        document.getElementById("curr").value = page //curr=2
-        document.getElementById("pageSize").value = ${pi.pageSize} //pageSize=3
-            document.getElementById("pageForm").submit()
+        <%--document.getElementById("curr").value = page //curr=2--%>
+        <%--document.getElementById("pageSize").value = ${pi.pageSize} //pageSize=3--%>
+        <%--document.getElementById("pageForm").submit()--%>
+        window.location = '${param.pageUrl}?curr='+page+'&pageSize='+${pi.pageSize}
     }
 </script>
 </body>

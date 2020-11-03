@@ -25,7 +25,7 @@ public class CompanyController {
             curr = 1;
         }
         if (pageSize == null) {
-            pageSize = 10;
+            pageSize = 5;
         }
         PageInfo<Company> pi = iCompanyService.findPage(curr,pageSize);
         l.info("toList pi="+pi);
@@ -33,7 +33,7 @@ public class CompanyController {
         //将数据发到页面，使用标签
         return "company/company-list";
     }
-    @RequestMapping(path="/update",method = RequestMethod.POST)
+    @RequestMapping(path="/update",method = {RequestMethod.GET,RequestMethod.POST})
     public String update(Company company){
         l.info("update company="+company);
 

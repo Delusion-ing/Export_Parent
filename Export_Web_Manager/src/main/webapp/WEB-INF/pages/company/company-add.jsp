@@ -37,7 +37,7 @@
         <!--订单信息-->
         <div class="panel panel-default">
             <div class="panel-heading">订单信息</div>
-            <form id="editForm" action="${path}/company/add.do" method="post">
+            <form id="editForm" action="${path}/admin/company/add.do" method="post">
                 <input type="hidden" name="id" value="${company.id}">
                 <div class="row data-type" style="margin: 0px">
                     <div class="col-md-2 title">企业名称</div>

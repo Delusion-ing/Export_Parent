@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--namespace: 需要映射的Dao接口类型-->
+<mapper namespace="cn.htl.dao.system.user.IUserDao">
+
+    <select id="findPage" resultMap="userMap" parameterType="string">
+        select * from pe_user where company_id =#{companyId} order by update_time desc
+    </select>
+
+    <resultMap id="userMap" type="user">
+        <id column="user_id" property="userId"/>
+        <result column="dept_Id" property="deptId"/>
+        <result column="email" property="email"/>
+        <result column="user_name" property="userName"/>
+        <result column="station" property="station"/>
+        <result column="password" property="password"/>
+        <result column="state" property="state"/>
+        <result column="company_id" property="companyId"/>
+        <result column="company_name" property="companyName"/>
+        <result column="dept_name" property="deptName"/>
+        <result column="manager_id" property="managerId"/>
+        <result column="gender" property="gender"/>
+        <result column="telephone" property="telephone"/>
+        <result column="birthday" property="birthday"/>
+        <result column="degree" property="degree"/>
+        <result column="salary" property="salary"/>
+        <result column="join_date" property="joinDate"/>
+        <result column="order_no" property="orderNo"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_dempt" property="createDempt"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+    
+    <insert id="save" parameterType="user">
+        insert into pe_user
+        (
+	    user_id      ,
+		DEPT_ID      ,
+		email        ,
+		user_Name    ,
+		station      ,
+		password     ,
+		StATE        ,
+		CoMPANY_ID   ,
+		company_name ,
+		dept_name    ,
+		manager_id   ,
+		gENDER       ,
+		telephone    ,
+		birthday     ,
+		degree       ,
+		salary       ,
+		JOiN_DATE    ,
+		ORdER_NO     ,
+		create_by    ,
+		create_dempt ,
+		create_time  ,
+		upDATE_BY    ,
+		update_time  ,
+		remark
+	)
+	values
+	(
+        #{userId      }  ,
+        #{deptId      }  ,
+        #{email       }  ,
+        #{userName    }  ,
+        #{station     }  ,
+        #{password    }  ,
+        #{state       }  ,
+        #{companyId   }  ,
+        #{companyName }  ,
+        #{deptName    }  ,
+        #{managerId   }  ,
+        #{gender      }  ,
+        #{telephone   }  ,
+        #{birthday    }  ,
+        #{degree      }  ,
+        #{salary      }  ,
+        #{joinDate    }  ,
+        #{orderNo     }  ,
+        #{createBy    }  ,
+        #{createDempt }  ,
+        #{createTime  }  ,
+        #{updateBy    }  ,
+        #{updateTime  }  ,
+        #{remark      }
+	)
+    </insert>
+
+    <select id="findById" parameterType="user" resultMap="userMap">
+        select * from pe_user where user_id  = #{userId}
+    </select>
+<!--    List<User> searcher(String userName);-->
+    <select id="searcher" resultMap="userMap" parameterType="user">
+        select * from pe_user where user_name  like "%"#{keyword}"%"
+    </select>
+
+
+
+    <update id="update" parameterType="user">
+        update pe_user set
+        DEPT_ID     	=		#{deptId      }  ,
+        email       	=		#{email       }  ,
+        user_Name   	=		#{userName    }  ,
+        station     	=		#{station     }  ,
+        password    	=		#{password    }  ,
+        StATE       	=		#{state       }  ,
+        CoMPANY_ID  	=		#{companyId   }  ,
+        company_name	=		#{companyName }  ,
+        dept_name   	=		#{deptName    }  ,
+        manager_id  	=		#{managerId   }  ,
+        gENDER      	=		#{gender      }  ,
+        telephone   	=		#{telephone   }  ,
+        birthday    	=		#{birthday    }  ,
+        degree      	=		#{degree      }  ,
+        salary      	=		#{salary      }  ,
+        JOiN_DATE   	=		#{joinDate    }  ,
+        ORdER_NO    	=		#{orderNo     }  ,
+        create_by   	=		#{createBy    }  ,
+        create_dempt	=		#{createDempt }  ,
+        create_time 	=		#{createTime  }  ,
+        upDATE_BY   	=		#{updateBy    }  ,
+        update_time 	=		#{updateTime  }  ,
+        remark      	=		#{remark      }
+    where user_id = #{userId}
+    </update>
+
+    <delete id="delete" parameterType="string">
+        delete from pe_user where user_id = #{userId}
+    </delete>
+
+</mapper>

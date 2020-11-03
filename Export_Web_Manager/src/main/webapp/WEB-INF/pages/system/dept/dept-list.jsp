@@ -16,10 +16,10 @@
 </head>
 <script>
     function deleteById() {
-        var id = getCheckId()
-        if(id) {
+        var deptId = getCheckId()
+        if(deptId) {
             if(confirm("你确认要删除此条记录吗？")) {
-                location.href="/admin/dept/delete.do?id="+id;
+                location.href="${path}/admin/dept/delete.do?depId="+deptId;
             }
         }else{
             alert("请勾选待处理的记录，且每次只能勾选一个")

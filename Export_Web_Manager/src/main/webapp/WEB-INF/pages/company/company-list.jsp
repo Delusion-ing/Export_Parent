@@ -21,7 +21,7 @@
         var id = getCheckId()
         if(id) {
             if(confirm("你确认要删除此条记录吗？")) {
-                location.href="${path}/company/delete.do?id="+id;
+                location.href="${path}/admin/company/delete.do?id="+id;
             }
         }else{
             alert("请勾选待处理的记录，且每次只能勾选一个")

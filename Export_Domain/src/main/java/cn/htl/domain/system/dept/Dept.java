@@ -1,13 +1,11 @@
 package cn.htl.domain.system.dept;
 
-/**
- * @ClassName Dept
- * @Description TODO
- * @Author 胡靖
- * @Date 2020/10/29 20:52
- * @Version 1.0
- */
 public class Dept {
+    //成员变量是小驼峰 第二个单词起首字母大写
+    //deptId
+
+    //数据库  每个单词小写 使用_隔开
+    //dept_id
 
     private String deptId;
     private String deptName;
@@ -20,12 +18,20 @@ public class Dept {
     public Dept() {
     }
 
+    public Dept(String deptId, String deptName, Dept parent, Integer state, String companyId, String companyName) {
+        this.deptId = deptId;
+        this.deptName = deptName;
+        this.parent = parent;
+        this.state = state;
+        this.companyId = companyId;
+        this.companyName = companyName;
+    }
+
     @Override
     public String toString() {
         return "Dept{" +
                 "deptId='" + deptId + '\'' +
                 ", deptName='" + deptName + '\'' +
-                ", parent=" + parent +
                 ", state=" + state +
                 ", companyId='" + companyId + '\'' +
                 ", companyName='" + companyName + '\'' +
@@ -77,15 +83,6 @@ public class Dept {
     }
 
     public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-
-    public Dept(String deptId, String deptName, Dept parent, Integer state, String companyId, String companyName) {
-        this.deptId = deptId;
-        this.deptName = deptName;
-        this.parent = parent;
-        this.state = state;
-        this.companyId = companyId;
         this.companyName = companyName;
     }
 }

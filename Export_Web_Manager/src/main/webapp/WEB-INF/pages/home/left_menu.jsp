@@ -56,6 +56,11 @@
                             <i class="fa fa-circle-o"></i>企业管理
                         </a>
                     </li>
+                    <li id="">
+                        <a href="${path}/admin/dept/toList.do" onclick="setSidebarActive(this)"  target="iframe">
+                            <i class="fa fa-circle-o"></i>部门管理
+                        </a>
+                    </li>
                     <li id="module-manager">
                         <a href="${path}/admin/dept/toList.do" onclick="setSidebarActive(this)" target="iframe">
                             <i class="fa fa-circle-o"></i>模块管理

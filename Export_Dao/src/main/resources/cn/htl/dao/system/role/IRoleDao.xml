@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--namespace: 需要映射的Dao接口类型-->
+<mapper namespace="cn.htl.dao.system.role.IRoleDao">
+    <select id="findAll" parameterType="string" resultMap="roleMap">
+            select * from pe_role where company_id= #{companyId} order by order_no
+        </select>
+
+    <resultMap id="roleMap" type="role">
+        <id column="role_id" property="roleId"/>
+        <result column="name" property="name"/>
+        <result column="remark" property="remark"/>
+        <result column="order_no" property="orderNo"/>
+        <result column="create_by" property="createBy"/>
+        <result column="create_dept" property="createDept"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_by" property="updateBy"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="company_id" property="companyId"/>
+        <result column="company_name" property="companyName"/>
+    </resultMap>
+
+    <insert id="save" parameterType="role">
+        insert into pe_role
+        (
+        role_id       ,
+        name          ,
+        remark        ,
+        order_no      ,
+        create_by     ,
+        create_dept   ,
+        create_time   ,
+        update_by     ,
+        update_time   ,
+        company_id    ,
+        company_name
+                    )
+                    values
+            (
+        #{roleId      },
+        #{name        },
+        #{remark      },
+        #{orderNo     },
+        #{createBy    },
+        #{createDept  },
+        #{createTime  },
+        #{updateBy    },
+        #{updateTime  },
+        #{companyId   },
+        #{companyName }
+
+            )
+    </insert>
+
+    <select id="findById" parameterType="String" resultMap="roleMap">
+        select * from pe_role where role_id = #{roleId}
+
+    </select>
+    <update id="update" parameterType="role">
+
+
+        update pe_role set
+ name         = #{name       },
+            remark       = #{remark     },
+            order_no     = #{orderNo    },
+            create_by    = #{createBy   },
+            create_dept  = #{createDept },
+            create_time  = #{createTime },
+            update_by    = #{updateBy   },
+            update_time  = #{updateTime },
+            company_id   = #{companyId  },
+            company_name = #{companyName}
+
+            where role_id = #{roleId}
+    </update>
+
+    <delete id="deleteById" parameterType="string">
+        delete from pe_role where role_id = #{roleId}
+    </delete>
+</mapper>

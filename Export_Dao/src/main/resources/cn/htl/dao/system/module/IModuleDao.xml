@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--namespace: 需要映射的Dao接口类型-->
+<mapper namespace="cn.htl.dao.system.module.IModuleDao">
+
+    <select id="findPage" resultMap="moduleMap" parameterType="string">
+        select * from ss_module order by order_no asc
+    </select>
+
+    <resultMap id="moduleMap" type="module">
+        <id column="module_id" property="moduleId"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="parent_name" property="parentName"/>
+        <result column="name" property="name"/>
+        <result column="layer_num" property="layerNum"/>
+        <result column="is_leaf" property="isLeaf"/>
+        <result column="ico" property="ico"/>
+        <result column="cpermission" property="cpermission"/>
+        <result column="curl" property="curl"/>
+        <result column="ctype" property="ctype"/>
+        <result column="state" property="state"/>
+        <result column="belong" property="belong"/>
+        <result column="cwhich" property="cwhich"/>
+        <result column="quote_num" property="quoteNum"/>
+        <result column="remark" property="remark"/>
+        <result column="order_no" property="orderNo"/>
+    </resultMap>
+    
+    <insert id="save" parameterType="module">
+        insert into ss_module
+        (
+		module_id   ,
+		PARENT_id   ,
+		parent_name ,
+		name        ,
+		layer_num   ,
+		Is_leaf     ,
+		ICO         ,
+		cPERMISsION ,
+		CURL        ,
+		ctype       ,
+		state       ,
+		belong      ,
+		cwhich      ,
+		quote_num   ,
+		remark      ,
+		order_no
+	)
+	values
+	(
+	#{ moduleId	}  ,
+	#{parentId	}  ,
+	#{parentName	}  ,
+	#{name		}  ,
+	#{layerNum	}  ,
+	#{isLeaf		}  ,
+	#{ico			}  ,
+    #{cpermission	}  ,
+    #{curl		}  ,
+    #{ctype		}  ,
+    #{state		}  ,
+    #{belong		}  ,
+    #{cwhich		}  ,
+    #{quoteNum	}  ,
+    #{remark		}  ,
+	#{orderNo		}
+
+	)
+    </insert>
+
+    <select id="findById" parameterType="string" resultMap="moduleMap">
+        select * from ss_module where module_id  = #{moduleId}
+    </select>
+    <update id="update" parameterType="module">
+        update ss_module set
+    PARENT_id  		=		#{parentId	}  ,
+    parent_name		=		#{parentName	}  ,
+    name       		=		#{name		}  ,
+    layer_num  		=		#{layerNum	}  ,
+    Is_leaf    		=		#{isLeaf		}  ,
+    ICO        		=		#{ico			}  ,
+    cPERMISsION		=		#{cpermission	}  ,
+    CURL       		=		#{curl		}  ,
+    ctype      		=		#{ctype		}  ,
+    state      		=		#{state		}  ,
+    belong     		=		#{belong		}  ,
+    cwhich     		=		#{cwhich		}  ,
+    quote_num  		=		#{quoteNum	}  ,
+    remark     		=		#{remark		}  ,
+    order_no		=		#{orderNo		}
+    where module_id = #{moduleId}
+    </update>
+
+    <delete id="delete" parameterType="string">
+        delete from ss_module where module_id = #{moduleId}
+    </delete>
+
+    <select id="findParentIdCount" parameterType="string" resultType="int">
+        select count (*) from ss_module where parent_id = #{moduleId}
+    </select>
+
+</mapper>
