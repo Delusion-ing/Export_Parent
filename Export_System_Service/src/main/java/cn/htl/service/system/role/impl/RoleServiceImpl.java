@@ -52,4 +52,14 @@ public class RoleServiceImpl implements IRoleService {
     public void deleteRole(String roleId) {
         roleDao.deleteById(roleId);
     }
+
+    @Override
+    public List<Role> finRolesByUserId(String userId) {
+        return roleDao.findByUserId(userId);
+    }
+
+    @Override
+    public List<Role> finAll(String companyId) {
+        return roleDao.findAll(companyId);
+    }
 }

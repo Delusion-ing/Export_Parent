@@ -21,4 +21,6 @@ public interface IRoleDao {
     void update(Role role);
 
     void deleteById(String roleId);
+
+    List<Role> findByUserId(String userId);
 }

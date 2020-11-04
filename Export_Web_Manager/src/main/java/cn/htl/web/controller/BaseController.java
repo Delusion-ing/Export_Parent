@@ -1,5 +1,6 @@
 package cn.htl.web.controller;
 
+import cn.htl.domain.system.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,11 +11,21 @@ import javax.servlet.http.HttpSession;
 public class BaseController {
     //定义一个可以返回companyId
     public String getLoginCompanyId(){
-        return "1";
+        User user = (User) session.getAttribute("loginUser");
+        if (user != null) {
+            return user.getCompanyId();
+        } else {
+            return "1";
+        }
     }
     //定义一个可以返回companyName
     public String getLoginCompanyName(){
-        return "吉首大学张家界学院";
+        User user = (User) session.getAttribute("loginUser");
+        if (user != null) {
+            return user.getCompanyName();
+        } else {
+            return "吉首大学张家界学院";
+        }
     }
 
     //2 如果在父类中定义成员变量 request,session,response,并且注入对象

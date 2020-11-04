@@ -77,4 +77,9 @@
     <delete id="deleteById" parameterType="string">
         delete from pe_role where role_id = #{roleId}
     </delete>
+    <select id="findByUserId" parameterType="string" resultMap="roleMap">
+        select  * from pe_role_user ru inner join pe_role r
+        on ru.role_id = r.role_id
+        where ru.user_id = #{userId}
+    </select>
 </mapper>

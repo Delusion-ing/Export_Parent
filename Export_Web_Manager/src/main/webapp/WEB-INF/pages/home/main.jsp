@@ -25,7 +25,7 @@
                 style="overflow:visible;"
                 scrolling="auto"
                 frameborder="no" height="100%" width="100%"
-                src="home.do"></iframe>
+                src="${path}/home/toHome.do"></iframe>
     </div>
     <!-- 内容区域 /-->
 

@@ -3,6 +3,8 @@ package cn.htl.service.system.role;
 import cn.htl.domain.system.role.Role;
 import com.github.pagehelper.PageInfo;
 
+import java.util.List;
+
 /**
  * @ClassName IRoleService
  * @Description TODO
@@ -21,4 +23,8 @@ public interface IRoleService {
 
 
     void deleteRole(String roleId);
+
+    List<Role> finRolesByUserId(String userId);
+
+    List<Role> finAll(String companyId);
 }

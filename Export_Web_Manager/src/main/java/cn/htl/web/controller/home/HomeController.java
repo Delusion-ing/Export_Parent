@@ -13,4 +13,8 @@ public class HomeController {
     public String toMain(){
         return "home/main";
     }
+    @RequestMapping(path="/toHome",method = {RequestMethod.GET,RequestMethod.POST})
+    public String toHome(){
+        return "home/home";
+    }
 }

@@ -22,4 +22,6 @@ public interface IUserService {
     void saveUser(User user);
 
     PageInfo<User> searcher(int curr, int pageSize, String userName);
+
+    User findUserByEmail(String email);
 }

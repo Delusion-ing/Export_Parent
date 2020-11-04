@@ -4,8 +4,10 @@ import cn.htl.dao.system.dept.IDeptDao;
 import cn.htl.dao.system.user.IUserDao;
 import cn.htl.domain.Result;
 import cn.htl.domain.system.dept.Dept;
+import cn.htl.domain.system.role.Role;
 import cn.htl.domain.system.user.User;
 import cn.htl.service.system.dept.IDeptService;
+import cn.htl.service.system.role.IRoleService;
 import cn.htl.service.system.user.IUserService;
 import cn.htl.web.controller.BaseController;
 import com.github.pagehelper.PageInfo;
@@ -33,6 +35,8 @@ public class UserController extends BaseController {
     IUserService userService;
     @Autowired
     IDeptService deptService;
+    @Autowired
+    IRoleService roleService;
 
     @RequestMapping(path="/toList",method ={ RequestMethod.GET, RequestMethod.POST})
     public String toList(@RequestParam(defaultValue = "1") int curr, @RequestParam(defaultValue = "6")int pageSize){
@@ -77,6 +81,23 @@ public class UserController extends BaseController {
         return "system/user/user-list";
     }
 
+    @RequestMapping(path = "/toUpdate",method = {RequestMethod.POST,RequestMethod.GET})
+    public String toUpdate(String userId){
+
+        User user =  userService.findUserById(userId);
+        request.setAttribute("user",user);
+        List<Dept> depts = deptService.findAll(getLoginCompanyId());
+        request.setAttribute("depts",depts);
+        return "system/user/user-update";
+    }
+
+    @RequestMapping(path = "/update",method = {RequestMethod.POST,RequestMethod.GET})
+    public String update(User user){
+        userService.updateUser(user);
+
+        return "redirect:/admin/user/toList.do";
+    }
+
 
 
     @RequestMapping(path="/toAdd",method ={ RequestMethod.GET, RequestMethod.POST})
@@ -100,6 +121,65 @@ public class UserController extends BaseController {
 
         return "redirect:/admin/user/toList.do";
     }
+    @RequestMapping(path="/userRole",method ={ RequestMethod.GET, RequestMethod.POST})
+    public String userRole(String userId){
+        User user = userService.findUserById(userId);
+        request.setAttribute("user",user);
 
+        //查询角色
+        String companyId = getLoginCompanyId();
+        List<Role> roles = roleService.finAll(companyId);
+
+        List<Role> userRoleList = roleService.finRolesByUserId(userId);
+
+        for (Role role :roles){
+            if (isInUserRoleList(role,userRoleList)){
+                role.setChecked(true);
+            }
+        }
+        request.setAttribute("roles",roles);
+        request.setAttribute("userRoleList",userRoleList);
+        return "system/user/user-role";
+    }
+    private boolean isInUserRoleList(Role role, List<Role> userRoleList) {
+        for( Role r:userRoleList){
+            if(r.getRoleId().equals(role.getRoleId())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @RequestMapping(path = "/login", method = {RequestMethod.GET, RequestMethod.POST})
+    public String login(String email,String password) {
+        User user = userService.findUserByEmail(email);
+        if (user != null) {
+            //1:找到
+            //比较账号密码
+            if (user.getPassword().equals(password)) {
+                //正确
+                session.setAttribute("loginUser", user);
+                return "redirect:/home/toMain.do";
+            } else {
+                //密码不对
+                request.setAttribute("error", "邮箱或者密码不正确");
+                return "forward:/login.jsp";
+            }
+        } else {
+            request.setAttribute("error", "用户名不正确");
+            return "forward:/login.jsp";
+
+        }
+    }
+
+    @RequestMapping(path = "/logout", method = {RequestMethod.GET, RequestMethod.POST})
+    public String logout() {
+        session.removeAttribute("loginUser");
+
+        session.invalidate();
+
+        return "redirect:/login.jsp";
+
+    }
 
 }

@@ -21,11 +21,21 @@ public class Role {
     private Date updateTime;
     private String companyId; //不同的公司使用不同的角色，但都放在同一表里面，怎么区分?
     private String companyName;//每条记录 通过companyId,companyName指定所属
+    private boolean checked;
+
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
 
     public Role() {
     }
 
-    public Role(String roleId, String name, String remark, long orderNo, String createBy, String createDept, Date createTime, String updateBy, Date updateTime, String companyId, String companyName) {
+    public Role(String roleId, String name, String remark, long orderNo, String createBy, String createDept, Date createTime, String updateBy, Date updateTime, String companyId, String companyName,boolean setChecked) {
         this.roleId = roleId;
         this.name = name;
         this.remark = remark;
@@ -143,5 +153,7 @@ public class Role {
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
     }
+
+
 }
 

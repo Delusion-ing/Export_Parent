@@ -24,4 +24,6 @@ public interface IUserDao {
     void delete(String userId);
 
     List<User> searcher(String userName);
+
+    User findByEmail(String email);
 }
