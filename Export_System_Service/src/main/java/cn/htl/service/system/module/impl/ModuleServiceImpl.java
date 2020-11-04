@@ -2,6 +2,7 @@ package cn.htl.service.system.module.impl;
 
 import cn.htl.dao.system.module.IModuleDao;
 import cn.htl.domain.system.module.Module;
+import cn.htl.domain.system.user.User;
 import cn.htl.service.system.module.IModuleService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -62,6 +63,24 @@ public class ModuleServiceImpl implements IModuleService {
 
     @Override
     public List<Module> findAllModules() {
-        return null;
+        return moduleDao.findPage();
+
+    }
+
+    @Override
+    public List<Module> findModuleByRoleId(String roleId) {
+        return moduleDao.findByRoleId(roleId);
+    }
+
+    @Override
+    public void updateRoleModule(String roleId, String moduleIds) {
+        moduleDao.delete(roleId);
+
+        String [ ] mids = moduleIds.split(",");
+        if (mids.length> 0 ){
+            for (String mid: mids){
+                moduleDao.saveRoleModule(roleId,mid);
+            }
+        }
     }
 }

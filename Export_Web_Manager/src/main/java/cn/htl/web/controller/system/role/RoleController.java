@@ -1,7 +1,9 @@
 package cn.htl.web.controller.system.role;
 
 import cn.htl.domain.Result;
+import cn.htl.domain.system.module.Module;
 import cn.htl.domain.system.role.Role;
+import cn.htl.service.system.module.IModuleService;
 import cn.htl.service.system.role.IRoleService;
 import cn.htl.web.controller.BaseController;
 import org.springframework.ui.Model;
@@ -13,6 +15,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName RoleController
@@ -28,6 +36,8 @@ public class RoleController extends BaseController {
 
     @Autowired
     IRoleService roleService;
+    @Autowired
+    IModuleService moduleService;
 
     @RequestMapping(path = "/toList",method = {RequestMethod.POST,RequestMethod.GET})
     public String toList( @RequestParam(defaultValue = "1") Integer curr , @RequestParam(defaultValue = "5") Integer pageSize){
@@ -83,8 +93,63 @@ public class RoleController extends BaseController {
         }
     }
 
-    @RequestMapping(path = "/toRoleModule",method = {RequestMethod.POST,RequestMethod.GET})
-    public String toRoleModule(){
+
+    //location.href="${path}/system/role/toRoleModule.do?roleId="+id;
+    @RequestMapping(path="/roleModule",method ={ RequestMethod.GET, RequestMethod.POST})
+    public String toRoleModule(String roleId){//接收页面提交的roleId
+        Role role = roleService.findById(roleId);
+
+        //数据转发到页面
+        request.setAttribute("role",role);
         return "system/role/role-module";
     }
+
+    //$.get('${path}/role/getZtreeData.do?roleId=${role.roleId}',fn,'json')
+
+    @RequestMapping(path="/getZtreeData",method ={ RequestMethod.GET, RequestMethod.POST})
+    public @ResponseBody Object getZtreeData(String roleId) {//接收页面提交的roleId
+        //所有的权限查询出来
+        List<Module> all = moduleService.findAllModules();
+        //转换成 List<Map<String,Object>>  { id:1, pId:0, name:"Sass管理", open:true},
+        //根据 roleId查 该角色的权限
+        List<Module> myList = moduleService.findModuleByRoleId(roleId);
+        List<Map<String,Object>> list = new ArrayList<>();
+        //返回给页面
+        for(Module m:all){
+            //生成一个集合 Map<String,Object> 表示一节点
+            Map<String,Object> node = new HashMap<String,Object>();
+            node.put("id",m.getModuleId());
+            node.put("pId",m.getParentId());
+            node.put("name",m.getName());
+            node.put("open",true);
+            if(isInMyList(m,myList)){
+                node.put("checked",true);//为了在菜单页面上打上勾。有打勾就表示有这个权限，否则就是没有
+            }
+            //添加到集合中
+            list.add(node);
+        }
+        return list;//@ResponseBody将list转成json
+    }
+
+    //需要判断m是否在myList里面，如果在表示该角色有这个权限，否则没有
+    private boolean isInMyList(Module m, List<Module> myList) {
+        for(Module my:myList){
+            if(m.getModuleId().equals(my.getModuleId())){
+                return true;
+            }
+        }//end for 循环结束
+        return false;
+    }
+
+    @RequestMapping(path = "/updateRoleModule",method = {RequestMethod.GET,RequestMethod.POST})
+    public String updateRoleModule(String roleId, String moduleIds){
+
+        moduleService.updateRoleModule(roleId,moduleIds);
+
+        return "redirect:/admin/role/toList.do";
+
+    }
+
+
+
 }

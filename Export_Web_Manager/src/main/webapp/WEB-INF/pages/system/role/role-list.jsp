@@ -48,7 +48,7 @@
     function findModuleByRoleId(){
         var id = getCheckId();
         if(id) {
-            location.href="/admin/role/roleModule.do?roleid="+id;
+            location.href="${path}/admin/role/roleModule.do?roleId="+id;
         }else{
             alert("请勾选待处理的记录，且每次只能勾选一个")
         }

@@ -23,4 +23,8 @@ public interface IModuleDao {
     void delete(String moduleId);
 
     int findParentIdCount(String moduleId);
+
+    List<Module> findByRoleId(String roleId);
+
+    void saveRoleModule(String roleId, String mid);
 }

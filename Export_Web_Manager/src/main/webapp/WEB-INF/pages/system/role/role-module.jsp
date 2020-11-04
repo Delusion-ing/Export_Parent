@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: 胡靖
-  Date: 2020/10/31
-  Time: 16:06
-  To change this template use File | Settings | File Templates.
---%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="../../base.jsp" %>
@@ -22,14 +15,48 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
     <!-- 页面meta /-->
-    <link rel="stylesheet" href="plugins/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css">
-    <script type="text/javascript" src="plugins/ztree/js/jquery-1.4.4.min.js"></script>
-    <script type="text/javascript" src="plugins/ztree/js/jquery.ztree.core-3.5.js"></script>
-    <script type="text/javascript" src="plugins/ztree/js/jquery.ztree.excheck-3.5.js"></script>
+    <%-- 第一步：拷贝如下引入的css/js文件到项目的ztree-test.html页面
+       第二步：拷贝js导入到当前页面
+       第三步：页面定义显示树的区域--%>
+    <link rel="stylesheet" type="text/css" href="${path}/plugins/ztree/css/zTreeStyle/zTreeStyle.css">
+    <script type="text/javascript" src="${path}/plugins/ztree/js/jquery-1.4.4.min.js"></script>
+    <script type="text/javascript" src="${path}/plugins/ztree/js/jquery.ztree.all-3.5.min.js"></script>
 
-    <SCRIPT type="text/javascript">
+    <script type="text/javascript">
 
-    </SCRIPT>
+
+        //当前的配置信息
+        var setting = {
+            check: {
+                enable: true
+            },
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            }
+        };
+        //当前的数据
+        /*var zNodes =[
+            { id:1, pId:0, name:"Sass管理", open:true},
+            { id:11, pId:1, name:"企业管理", open:true,checked:true},
+            { id:111, pId:1, name:"模块管理"}
+        ];*/
+
+        $(document).ready(function(){
+            var fn =function(data){
+                //菜单的初始化
+                $.fn.zTree.init($("#treeDemo"), setting, data);
+                //参1 显示的标签
+                //参2 设置的参数 比如支持复选 check enable = true
+                //参3 数据
+            }
+            $.get('${path}/admin/role/getZtreeData.do?roleId=${role.roleId}',fn,'json')
+
+
+        });
+
+    </script>
 </head>
 
 <body style="overflow: visible;">
@@ -65,8 +92,35 @@
                     </div>
                     <!--工具栏/-->
                     <!-- 树菜单 -->
-                    <form name="icform" method="post" action="/admin/role/updateRoleModule.do">
-                        <input type="hidden" name="roleid" value="${role.id}"/>
+                    <script type="text/javascript">
+                        function submitCheckedNodes() {
+                            //先读取树状菜单的moduleId，再拼接成 201,202,203 赋值给隐藏框
+                            var tree= $.fn.zTree.getZTreeObj("treeDemo");
+                            //再获取选中的moduleId
+                            //tree.getCheckedNodes(true); 返回被选中的节点，放在一个数组中
+                            var nodes = tree.getCheckedNodes(true);
+                            var moduleIds = ''
+                            for(var i = 0;i<nodes.length;i++){
+                                console.info(nodes[i])
+                                var moduleId = nodes[i].id
+                                moduleIds += moduleId
+                                //201,202,203 如果是最后一个元素，不需要拼接,
+                                if(i != nodes.length-1){
+                                    moduleIds += ','
+                                }//end if
+
+                            }//end for
+                            console.info("moduleIds = "+moduleIds)
+                            //将得到的moduleIds 设置给隐藏输入框，方便提交到后台控制器
+                            $('#moduleIds').val(moduleIds)
+                            //提交表单
+
+                            $('#icform').submit()
+                        }
+                    </script>
+                    <form id="icform" method="post" action="${path}/admin/role/updateRoleModule.do">
+                        <input type="hidden" name="roleId" value="${role.roleId}"/>
+                        <!-- 先读取树状菜单的moduleId，再拼接成 201,202,203 赋值给隐藏框-->
                         <input type="hidden" id="moduleIds" name="moduleIds" value=""/>
                         <div class="content_wrap">
                             <div class="zTreeDemoBackground left" style="overflow: visible">

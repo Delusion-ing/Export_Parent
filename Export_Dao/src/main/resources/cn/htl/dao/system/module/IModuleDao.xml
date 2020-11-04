@@ -3,7 +3,7 @@
 <!--namespace: 需要映射的Dao接口类型-->
 <mapper namespace="cn.htl.dao.system.module.IModuleDao">
 
-    <select id="findPage" resultMap="moduleMap" parameterType="string">
+    <select id="findPage" resultMap="moduleMap" parameterType="module">
         select * from ss_module order by order_no asc
     </select>
 
@@ -98,5 +98,22 @@
     <select id="findParentIdCount" parameterType="string" resultType="int">
         select count (*) from ss_module where parent_id = #{moduleId}
     </select>
+    <!--    List<Module> findByRoleId(String roleId);-->
+    <select id="findByRoleId" parameterType="string" resultMap="moduleMap" >
+        select m.*
+        from pe_role_module rm
+        inner join ss_module m
+        on rm.module_id = m.module_id
+        where rm.role_id=#{roleId}
+    </select>
+
+    <insert id="saveRoleModule">
+            insert into pe_role_module values(#{arg0},#{arg1})
+    </insert>
+
+    <select id="findByBelong" parameterType="string" resultMap="moduleMap">
+        select * from ss_module where belong = #{belong};
+    </select>
+
 
 </mapper>

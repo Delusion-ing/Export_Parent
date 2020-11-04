@@ -1,6 +1,7 @@
 package cn.htl.service.system.module;
 
 import cn.htl.domain.system.module.Module;
+import cn.htl.domain.system.user.User;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
@@ -24,4 +25,8 @@ public interface IModuleService {
     boolean deleteModuleById(String moduleId);
 
     List<Module> findAllModules();
+
+    List<Module> findModuleByRoleId(String roleId);
+
+    void updateRoleModule(String roleId, String moduleIds);
 }
