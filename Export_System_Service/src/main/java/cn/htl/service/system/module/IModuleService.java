@@ -29,4 +29,6 @@ public interface IModuleService {
     List<Module> findModuleByRoleId(String roleId);
 
     void updateRoleModule(String roleId, String moduleIds);
+
+    List<Module> findModulesByUser(User user);
 }

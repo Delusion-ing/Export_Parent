@@ -27,4 +27,8 @@ public interface IModuleDao {
     List<Module> findByRoleId(String roleId);
 
     void saveRoleModule(String roleId, String mid);
+
+    List<Module> findByBelong(String belong);
+
+    List<Module> findByUserId(String userId);
 }

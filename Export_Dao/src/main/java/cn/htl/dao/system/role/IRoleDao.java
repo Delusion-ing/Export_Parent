@@ -23,4 +23,8 @@ public interface IRoleDao {
     void deleteById(String roleId);
 
     List<Role> findByUserId(String userId);
+
+    void deleteUserRoleByUserId(String userId);
+
+    void saveUserRole(String userId, String roleId);
 }

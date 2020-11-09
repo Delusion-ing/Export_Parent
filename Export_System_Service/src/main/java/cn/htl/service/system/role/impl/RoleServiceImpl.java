@@ -62,4 +62,14 @@ public class RoleServiceImpl implements IRoleService {
     public List<Role> finAll(String companyId) {
         return roleDao.findAll(companyId);
     }
+
+    @Override
+    public void updateUserRole(String userId, String[] roleIds) {
+        //删除
+        roleDao.deleteUserRoleByUserId(userId);//删除 用户角色中间表
+
+        for(String roleId:roleIds){
+            roleDao.saveUserRole(userId,roleId);
+        }
+    }
 }

@@ -82,4 +82,18 @@
         on ru.role_id = r.role_id
         where ru.user_id = #{userId}
     </select>
+
+<!--    void deleteUserRoleByUserId(String userId);-->
+
+<!--    void saveUserRole(String userId, String roleId);-->
+
+    <delete id="deleteUserRoleByUserId" parameterType="string">
+            delete from pe_role_user  where user_id=#{userId}
+    </delete>
+
+    <insert id="saveUserRole" >
+            insert into pe_role_user values(#{arg0},#{arg1})
+    </insert>
+
+
 </mapper>

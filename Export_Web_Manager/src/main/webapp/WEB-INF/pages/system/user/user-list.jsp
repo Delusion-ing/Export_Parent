@@ -44,7 +44,7 @@
     function roleList() {
         var id = getCheckId()
         if(id) {
-            location.href="${path}/admin/user/userRole.do?userId="+id;
+            location.href='${path}/admin/user/userRole.do?userId='+id;
         }else{
             alert("请勾选待处理的记录，且每次只能勾选一个")
         }

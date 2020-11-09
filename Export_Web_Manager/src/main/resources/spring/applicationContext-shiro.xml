@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!--shiro搭建2  2.3 配置shiroFilter 认证或授权逻辑处理对象-->
+
+    <!--1.配置shiroFilter 认证或授权逻辑处理对象-->
+
+    <!--注入：这里的shiroFilter必须和web.xml的filter-name保持一致-->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <!--注入SecurityManager-->
+        <property name="securityManager" ref="securityManager"/>
+
+        <property name="filterChainDefinitions">
+            <value>
+                <!-- 如果请求提静态资源 anon 不要求session中有user，直接可以访问-->
+                /css/**=anon
+                /img/**=anon
+                /plugins/**=anon
+                <!-- 如果请求login.do方法 anon-->
+                /admin/user/login-shiro.do=anon
+                <!--             /company/toList.do = perms["企业管理"]-->
+                <!-- 如果除以上之后的xxx.do 要求登录 authc查询session中是否有user-->
+                /**=authc
+            </value>
+        </property>
+        <!--如果 session就是没有user，表示未登录，页面转到login-shiro.jsp -->
+        <property name="loginUrl" value="/login-shiro.jsp"/>
+        <property name="unauthorizedUrl" value="/unauthorized.jsp"/>
+
+    </bean>
+
+    <!--2.1.创建 SecurityManager-->
+
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <!--注入Realm-->
+        <property name="realm" ref="authRealm"/>
+    </bean>
+
+    <!--配置一个密码的匹配器-->
+    <!--  123 是用户提交过来的， 密码的匹配器 得到密文1，与数据库的密码2-->
+    <!--创建凭证匹配器-->
+    <bean id="credentialsMatcher1" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+        <!--指定加密算法-->
+        <property name="hashAlgorithmName" value="md5"/>
+    </bean>
+    <!--使用自己定义的匹配器-->
+    <bean id="credentialsMatcher2" class="cn.htl.web.utils.CustomCredentialsMatcher">
+    </bean>
+    <!--2.2.创建Realm-->
+    <bean id="authRealm" class="cn.htl.web.shiro.AuthRealm">
+        <property name="credentialsMatcher" ref="credentialsMatcher2"/>
+    </bean>
+
+    <!-- @RequiredPermission-->
+    <bean id="lifecycleBeanPostProcessor"
+          class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lifecycleBeanPostProcessor"/>
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
+
+
+</beans>
+

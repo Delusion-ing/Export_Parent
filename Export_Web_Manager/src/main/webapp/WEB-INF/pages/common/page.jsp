@@ -23,7 +23,7 @@
         <c:if test="${pi.pageNum != 1 }">
             <li><a href="javascript:goPage(${pi.prePage})">上一页</a></li>
         </c:if>
-        <c:forEach begin="1" end="${pi.pages}" var="i">
+        <c:forEach begin="${pi.pageNum-6 <= 0 ? 1:pi.pageNum-6}" end="${pi.pageNum+6>pi.pages?pi.pages:pi.pageNum+6}" var="i">
             <li class="paginate_button ${pi.pageNum==i ? 'active':''}"><a href="javascript:goPage(${i})">${i}</a></li>
         </c:forEach>
         <c:if test="${pi.pageNum != pi.pages }">

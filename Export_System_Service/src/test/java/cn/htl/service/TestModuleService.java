@@ -1,6 +1,7 @@
 package cn.htl.service;
 
 import cn.htl.domain.system.module.Module;
+import cn.htl.domain.system.user.User;
 import cn.htl.service.system.module.IModuleService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,5 +40,19 @@ public class TestModuleService {
         String moduleIds="201,202,203";//添加角色的权限
         moduleService.updateRoleModule(roleId,moduleIds);
     }
+    @Test
+    public void test03(){
+
+        User user = new User();
+        user.setUserId("002108e2-9a10-4510-9683-8d8fd1d374ef");
+        //user.setDegree(0);
+        //user.setDegree(1);//企业管理员
+        user.setDegree(4);//普通用户
+        //一个 Module对象 就是左侧栏上的一个菜单项
+        List<Module> menus = moduleService.findModulesByUser(user);
+        System.out.println("test03"+menus);
+
+    }
+
 
 }

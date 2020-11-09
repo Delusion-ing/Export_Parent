@@ -27,4 +27,6 @@ public interface IRoleService {
     List<Role> finRolesByUserId(String userId);
 
     List<Role> finAll(String companyId);
+
+    void updateUserRole(String userId, String[] roleIds);
 }

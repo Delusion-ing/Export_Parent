@@ -83,4 +83,15 @@ public class ModuleServiceImpl implements IModuleService {
             }
         }
     }
+
+    @Override
+    public List<Module> findModulesByUser(User user) {
+        if (user.getDegree() == 0){
+            return moduleDao.findByBelong("0");
+        }else if (user.getDegree() == 1){
+            return moduleDao.findByBelong("1");
+        }else {
+            return moduleDao.findByUserId(user.getUserId());
+        }
+    }
 }
